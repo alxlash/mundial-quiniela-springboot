@@ -14,7 +14,6 @@ public class QuinielaService {
     private final UsuarioRepository usuarioRepository;
     private final EquipoRepository equipoRepository;
 
-    // El constructor une nuestro servicio con los planos (interfaces) que creamos antes
     public QuinielaService(PartidoRepository partidoRepository, PronosticoRepository pronosticoRepository, 
                            UsuarioRepository usuarioRepository, EquipoRepository equipoRepository) {
         this.partidoRepository = partidoRepository;
@@ -24,50 +23,79 @@ public class QuinielaService {
     }
 
     /**
-     * Algoritmo Rey: Cuando el Administrador anota el resultado REAL de un partido,
-     * este metodo calcula los puntos de TODOS los amigos automaticamente.
+     * 🔥 NUEVO MÉTODO: Guarda o actualiza la tendencia ("LOCAL", "EMPATE", "VISITANTE")
+     * junto con un comentario opcional para tirar barrio con los amigos.
+     */
+    @Transactional
+    public void guardarOActualizarPronostico(Long usuarioId, int numeroPartido, String tendencia, String comentario) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + usuarioId));
+                
+        Partido partido = partidoRepository.findById((long) numeroPartido)
+                .orElseThrow(() -> new IllegalArgumentException("Partido no encontrado con No: " + numeroPartido));
+
+        // Buscamos si ya existía un pronóstico previo para este partido y usuario
+        List<Pronostico> pronosticosExistentes = pronosticoRepository.findByPartido(partido);
+        Pronostico pronostico = pronosticosExistentes.stream()
+                .filter(p -> p.getUsuario().getId().equals(usuarioId))
+                .findFirst()
+                .orElse(new Pronostico());
+
+        // Si es nuevo, enlazamos las relaciones
+        if (pronostico.getId() == null) {
+            pronostico.setUsuario(usuario);
+            pronostico.setPartido(partido);
+        }
+
+        // Asignamos los nuevos valores simplificados
+        pronostico.setTendenciaElegida(tendencia); // "LOCAL", "EMPATE" o "VISITANTE"
+        pronostico.setComentario(comentario);
+        pronostico.setPuntosObtenidos(0); // Por defecto en 0 hasta que se juegue el partido
+
+        pronosticoRepository.save(pronostico);
+    }
+
+    /**
+     * 🔥 ALGORITMO REY ACTUALIZADO:
+     * Compara las tendencias de texto de forma directa. ¡1 punto o 0 puntos!
      */
     @Transactional
     public void registrarResultadoReal(int partidoId, int golesLocalReal, int golesVisitaReal) {
-        // Buscamos el partido usando el ID tipo int
         Partido partido = partidoRepository.findById((long) partidoId)
                 .orElseThrow(() -> new IllegalArgumentException("Partido no encontrado"));
 
-        // 1. Actualizar el partido con el marcador real
+        // 1. Actualizar el partido con el marcador real en el panel de admin
         partido.setGolesLocal(golesLocalReal);
         partido.setGolesVisitante(golesVisitaReal);
         partido.setJugado(true);
         partidoRepository.save(partido);
 
-        // 2. Buscar todos los pronosticos que hicieron tus amigos para este partido
+        // 2. 🔥 Traducimos los goles reales a un String de tendencia oficial
+        String tendenciaReal = calcularTendenciaString(golesLocalReal, golesVisitaReal);
+
+        // 3. Evaluar los pronósticos de todos tus amigos
         List<Pronostico> pronosticos = pronosticoRepository.findByPartido(partido);
 
         for (Pronostico p : pronosticos) {
             int puntosGanados = 0;
 
-            // REGLA 1: ¡Le atino al marcador exacto! (Ej: Dijo 2-1 y quedo 2-1) -> 5 Puntos
-            if (p.getGolesLocal() == golesLocalReal && p.getGolesVisitante() == golesVisitaReal) {
-                puntosGanados = 5;
-            } 
-            // REGLA 2: No le atino al marcador, pero si al GANADOR o EMPATE -> 3 Puntos
-            else if (obtenerResultado(p.getGolesLocal(), p.getGolesVisitante()) == obtenerResultado(golesLocalReal, golesVisitaReal)) {
-                puntosGanados = 3;
-            }
-            // REGLA 3: No le atino a nada -> 0 Puntos
+            // 🔥 REGLA DE ORO: Comparación directa de cadenas de texto
+            if (p.getTendenciaElegida() != null && p.getTendenciaElegida().equals(tendenciaReal)) {
+                puntosGanados = 1; // Acierta ➔ 1 punto
+            } // Falla ➔ se queda con 0 puntos
 
             p.setPuntosObtenidos(puntosGanados);
             pronosticoRepository.save(p);
 
-            // Actualizar los puntos totales en el perfil de tu amigo
+            // Sumamos el punto a la bolsa acumulada de tu amigo
             Usuario usuario = p.getUsuario();
             recalcularPuntosTotalesUsuario(usuario);
         }
         
-        // 3. 🔥 SOLUCIÓN: Buscamos dinámicamente los equipos reales usando sus códigos de posición
+        // 4. Actualizar estadísticas reales del Mundial en la tabla de Equipos
         Equipo equipoLocal = equipoRepository.findByPosicionGrupo(partido.getCodigoLocal()).orElse(null);
         Equipo equipoVisitante = equipoRepository.findByPosicionGrupo(partido.getCodigoVisitante()).orElse(null);
 
-        // Si los equipos ya están definidos (fase de grupos o clasificados ya calculados), actualizamos sus estadísticas
         if (equipoLocal != null) {
             actualizarEstadisticasEquipos(equipoLocal, golesLocalReal, golesVisitaReal);
         }
@@ -76,10 +104,13 @@ public class QuinielaService {
         }
     }
 
-    private int obtenerResultado(int local, int visita) {
-        if (local > visita) return 1;  // Gana Local
-        if (visita > local) return -1; // Gana Visita
-        return 0;                      // Empate
+    /**
+     * 🔥 Método Auxiliar para traducir marcadores a etiquetas fijas
+     */
+    private String calcularTendenciaString(int golesLocal, int golesVisitante) {
+        if (golesLocal > golesVisitante) return "LOCAL";
+        if (golesVisitante > golesLocal) return "VISITANTE";
+        return "EMPATE";
     }
 
     private void recalcularPuntosTotalesUsuario(Usuario usuario) {
@@ -90,14 +121,35 @@ public class QuinielaService {
     }
 
     private void actualizarEstadisticasEquipos(Equipo equipo, int golesAFavor, int golesEnContra) {
+        equipo.setPartidosJugados(equipo.getPartidosJugados() + 1);
         equipo.setGolesAFavor(equipo.getGolesAFavor() + golesAFavor);
         equipo.setGolesEnContra(equipo.getGolesEnContra() + golesEnContra);
         
         if (golesAFavor > golesEnContra) {
-            equipo.setPuntos(equipo.getPuntos() + 3); // Gano
+            equipo.setPuntos(equipo.getPuntos() + 3);
         } else if (golesAFavor == golesEnContra) {
-            equipo.setPuntos(equipo.getPuntos() + 1); // Empato
+            equipo.setPuntos(equipo.getPuntos() + 1);
         }
         equipoRepository.save(equipo);
+    }
+
+    // Método para recuperar la tendencia guardada por el usuario (Para pintar la vista)
+    public String obtenerTendenciaPronosticada(Long usuarioId, int numeroPartido) {
+        return pronosticoRepository.findByPartido(partidoRepository.findById((long) numeroPartido).orElse(null))
+                .stream()
+                .filter(p -> p.getUsuario().getId().equals(usuarioId))
+                .findFirst()
+                .map(Pronostico::getTendenciaElegida)
+                .orElse(null);
+    }
+
+    // Método para recuperar el comentario guardado por el usuario (Para pintar la vista)
+    public String obtenerComentarioPronosticado(Long usuarioId, int numeroPartido) {
+        return pronosticoRepository.findByPartido(partidoRepository.findById((long) numeroPartido).orElse(null))
+                .stream()
+                .filter(p -> p.getUsuario().getId().equals(usuarioId))
+                .findFirst()
+                .map(Pronostico::getComentario)
+                .orElse(null);
     }
 }

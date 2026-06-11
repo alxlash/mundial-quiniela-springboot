@@ -8,9 +8,9 @@ import java.util.List;
 @Repository
 public interface PartidoRepository extends JpaRepository<Partido, Long> {
     
-    // Obtener partidos filtrando por si ya se jugaron o no (útil para la quiniela vs el panel de admin)
+    // Obtener partidos filtrando por si ya se jugaron o no
     List<Partido> findByJugado(boolean jugado);
     
-    // Obtener el calendario ordenado por fecha cronológica
-    List<Partido> findAllByOrderByFechaHoraAsc();
+    // 🔥 CORREGIDO: Sintaxis exacta de Spring Data para ordenar por Fecha y luego por Hora
+    List<Partido> findAllByOrderByFechaAscHoraAsc();
 }

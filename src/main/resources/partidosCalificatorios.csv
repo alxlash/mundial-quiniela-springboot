@@ -1,36 +1,33 @@
-Local,Visitante,Fecha,Hora,Estadio,Ciudad,País
-
-1A,3C/D/E/H,2026-06-28,16:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
-2A,2B,2026-06-29,15:00,Estadio Boston,Boston,Estados Unidos
-1B,3A/C/D/I,2026-06-29,18:00,Estadio Monterrey,Monterrey,México
-1C,3F/G/I/J,2026-06-29,21:00,Estadio Houston,Houston,Estados Unidos
-1D,3B/E/F/G,2026-06-30,12:00,Estadio Dallas,Dallas,Estados Unidos
-2C,2D,2026-06-30,15:00,Estadio Chicago,Chicago,Estados Unidos
-1E,3A/B/C/D,2026-06-30,18:00,Estadio Azteca,Ciudad de México,México
-1F,3G/H/J/K,2026-06-30,21:00,Estadio Seattle,Seattle,Estados Unidos
-1G,3A/E/H/I,2026-07-01,12:00,Estadio Atlanta,Atlanta,Estados Unidos
-2E,2F,2026-07-01,15:00,Estadio San Francisco,San Francisco,Estados Unidos
-1H,3B/C/F/G,2026-07-01,18:00,Estadio Kansas City,Kansas City,Estados Unidos
-2G,2H,2026-07-01,21:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
-1I,3C/D/E/L,2026-07-02,12:00,Estadio Toronto,Toronto,Canadá
-2I,2J,2026-07-02,15:00,Estadio Filadelfia,Filadelfia,Estados Unidos
-1J,3A/B/H/I,2026-07-02,18:00,Estadio Nueva York,Nueva York/Nueva Jersey,Estados Unidos
-1K,3I/J/K/L,2026-07-02,21:00,Estadio Miami,Miami,Estados Unidos
-1L,3E/H/J/K,2026-07-03,15:00,Estadio Dallas,Dallas,Estados Unidos
-2K,2L,2026-07-03,20:00,Estadio Kansas City,Kansas City,Estados Unidos
-Ganador 73,Ganador 75,2026-07-04,16:00,Estadio Filadelfia,Filadelfia,Estados Unidos
-Ganador 74,Ganador 76,2026-07-04,20:30,Estadio Houston,Houston,Estados Unidos
-Ganador 77,Ganador 78,2026-07-05,12:00,Estadio Nueva York,Nueva York/Nueva Jersey,Estados Unidos
-Ganador 79,Ganador 80,2026-07-05,16:30,Estadio Azteca,Ciudad de México,México
-Ganador 81,Ganador 82,2026-07-06,12:00,Estadio Dallas,Dallas,Estados Unidos
-Ganador 83,Ganador 84,2026-07-06,17:00,Estadio Seattle,Seattle,Estados Unidos
-Ganador 85,Ganador 86,2026-07-07,12:00,Estadio Atlanta,Atlanta,Estados Unidos
-Ganador 87,Ganador 88,2026-07-07,17:00,Estadio Vancouver,Vancouver,Canadá
-Ganador 89,Ganador 90,2026-07-09,15:00,Estadio Boston,Boston,Estados Unidos
-Ganador 91,Ganador 92,2026-07-09,20:00,Estadio Miami,Miami,Estados Unidos
-Ganador 93,Ganador 94,2026-07-10,18:00,Estadio San Francisco,San Francisco,Estados Unidos
-Ganador 95,Ganador 96,2026-07-11,15:30,Estadio Los Ángeles,Los Ángeles,Estados Unidos
-Ganador 97,Ganador 98,2026-07-14,19:00,Estadio Dallas,Dallas,Estados Unidos
-Ganador 99,Ganador 100,2026-07-15,19:00,Estadio Atlanta,Atlanta,Estados Unidos
-Perdedor 101,Perdedor 102,2026-07-18,15:00,Estadio Miami,Miami,Estados Unidos
-Ganador 101,Ganador 102,2026-07-19,15:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos
+No.dePartido,Local,Visitante,Fecha,Hora,Estadio,Ciudad,País
+73,1A,3C/D/E/H,2026-06-28,15:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+74,2A,2B,2026-06-29,13:00,Estadio Boston,Boston,Estados Unidos
+75,1B,3A/C/D/I,2026-06-29,18:00,Estadio Monterrey,Monterrey,México
+76,1C,3F/G/I/J,2026-06-29,19:00,Estadio Houston,Houston,Estados Unidos
+77,1D,3B/E/F/G,2026-06-30,11:00,Estadio Dallas,Dallas,Estados Unidos
+78,2C,2D,2026-06-30,14:00,Estadio Chicago,Chicago,Estados Unidos
+79,1E,3A/B/C/D,2026-06-30,18:00,Estadio Azteca,Ciudad de México,México
+80,1F,3G/H/J/K,2026-06-30,22:00,Estadio Seattle,Seattle,Estados Unidos
+81,1G,3A/E/H/I,2026-07-01,10:00,Estadio Atlanta,Atlanta,Estados Unidos
+82,2E,2F,2026-07-01,16:00,Estadio San Francisco,San Francisco,Estados Unidos
+83,1H,3B/C/F/G,2026-07-01,17:00,Estadio Kansas City,Kansas City,Estados Unidos
+84,2G,2H,2026-07-01,20:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+85,1I,3C/D/E/L,2026-07-02,13:00,Estadio Toronto,Toronto,Canadá
+86,2I,2J,2026-07-02,13:00,Estadio Filadelfia,Filadelfia,Estados Unidos
+87,1J,3A/B/H/I,2026-07-02,16:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos
+88,1K,3I/J/K/L,2026-07-02,19:00,Estadio Miami,Miami,Estados Unidos
+89,1L,3E/H/J/K,2026-07-03,14:00,Estadio Dallas,Dallas,Estados Unidos
+90,2K,2L,2026-07-03,19:00,Estadio Kansas City,Kansas City,Estados Unidos
+91,Ganador 73,Ganador 75,2026-07-04,14:00,Estadio Filadelfia,Filadelfia,Estados Unidos
+92,Ganador 74,Ganador 76,2026-07-04,19:30,Estadio Houston,Houston,Estados Unidos
+93,Ganador 77,Ganador 78,2026-07-05,10:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos
+94,Ganador 79,Ganador 80,2026-07-05,16:30,Estadio Azteca,Ciudad de México,México
+95,Ganador 81,Ganador 82,2026-07-06,11:00,Estadio Dallas,Dallas,Estados Unidos
+96,Ganador 83,Ganador 84,2026-07-06,18:00,Estadio Seattle,Seattle,Estados Unidos
+97,Ganador 85,Ganador 86,2026-07-07,10:00,Estadio Atlanta,Atlanta,Estados Unidos
+98,Ganador 87,Ganador 88,2026-07-07,18:00,Estadio BC Place,Vancouver,Canadá
+99,Ganador 89,Ganador 90,2026-07-09,13:00,Estadio Boston,Boston,Estados Unidos
+100,Ganador 91,Ganador 92,2026-07-09,18:00,Estadio Miami,Miami,Estados Unidos
+101,Ganador 93,Ganador 94,2026-07-10,19:00,Estadio San Francisco,San Francisco,Estados Unidos
+102,Ganador 95,Ganador 96,2026-07-11,14:30,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+103,Perdedor 101,Perdedor 102,2026-07-18,13:00,Estadio Miami,Miami,Estados Unidos
+104,Ganador 101,Ganador 102,2026-07-19,13:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos

@@ -8,12 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    
-    // Buscar a un amigo por su nombre (para cuando inicie sesión en la quiniela)
-    Optional<Usuario> findByNombre(String nombre);
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> { 
 
     // Tabla de posiciones de la quiniela: usuarios con mas puntos primero
     @Query("SELECT u FROM Usuario u ORDER BY u.puntosQuiniela DESC")
     List<Usuario> obtenerRankingQuiniela();
+    
+ // Para verificar si el apodo ya existe al registrarse
+    boolean existsByNombre(String nombre);
+    
+    // Para buscar al usuario y validar su contraseña al iniciar sesión
+    Optional<Usuario> findByNombre(String nombre);
+    
 }

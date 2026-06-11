@@ -2,24 +2,29 @@ package com.mundial.view;
 
 import com.mundial.entity.Equipo;
 import com.mundial.repository.EquipoRepository;
-import com.mundial.service.InterfazService; // 1. Agregamos el import de tu nuevo servicio
+import com.mundial.service.InterfazService;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
+
 import java.util.Arrays;
 import java.util.List;
 
-@Route("grupos")
-public class GruposView extends VerticalLayout {
+// 🎯 Conectamos esta vista al menú superior horizontal fijo
+@Route(value = "grupos", layout = MainLayout.class)
+public class GruposView extends VerticalLayout implements BeforeEnterObserver {
 
-    // 2. Declaramos ambas variables de clase aquí arriba
     private final EquipoRepository equipoRepository;
     private final InterfazService interfazService;
 
-    // 3. El constructor ahora recibe y mapea correctamente ambos componentes
+    private FlexLayout contenedorDeGrupos;
+
     public GruposView(EquipoRepository equipoRepository, InterfazService interfazService) {
         this.equipoRepository = equipoRepository;
         this.interfazService = interfazService;
@@ -28,95 +33,104 @@ public class GruposView extends VerticalLayout {
         setPadding(true);
         setSpacing(true);
 
-        // Encabezado principal
-        H2 titulo = new H2("📊 Tablas de Posiciones - Mundial 2026 📊");
-        titulo.getStyle().set("text-align", "center");
-        titulo.getStyle().set("margin-bottom", "20px");
+        // 1. Encabezado de la Sección
+        H2 titulo = new H2("📊 Tablas de Posiciones Oficiales - Mundial 2026 📊");
+        titulo.getStyle().set("text-align", "center").set("margin-bottom", "10px");
         add(titulo);
 
-        // 🔥 LA MAGIA CENTRALIZADA: Llamamos al parche de banderas con una sola línea limpia
-        // this.interfazService.aplicarParcheBanderas(this);
-        
-        // 🔥 LA CLAVE: Usamos FlexLayout en lugar de VerticalLayout para el contenedor
-        FlexLayout contenedorFlex = new FlexLayout();
-        contenedorFlex.setWidthFull();
-        
-        // Permitir que los elementos pasen a la siguiente fila si ya no caben
-        contenedorFlex.setFlexWrap(FlexLayout.FlexWrap.WRAP); 
-        
-        // Espaciado elegante entre las tarjetas de los grupos
-        contenedorFlex.getStyle().set("gap", "20px"); 
+        // 2. Contenedor Flexible Multicolumna (FlexLayout)
+        // Permite que las tablas de los grupos se acomoden solas de lado a lado según el tamaño de pantalla
+        contenedorDeGrupos = new FlexLayout();
+        contenedorDeGrupos.setWidthFull();
+        contenedorDeGrupos.getStyle()
+                .set("flex-wrap", "wrap") // Si no caben, bajan al siguiente renglón
+                .set("gap", "25px")       // Separación uniforme entre tarjetas de grupos
+                .set("justify-content", "center");
 
-        // Lista oficial de los 12 grupos del Mundial 2026 (De la A a la L)
-        List<String> grupos = Arrays.asList(
-            "Grupo A", "Grupo B", "Grupo C", "Grupo D",
-            "Grupo E", "Grupo F", "Grupo G", "Grupo H",
-            "Grupo I", "Grupo J", "Grupo K", "Grupo L"
-        );
-
-        // ⚙️ CONFIGURACIÓN DE DISTRIBUCIÓN (Elige tu favorita):
-        // Para 4x3 (4 columnas): Usa "calc(25% - 15px)"
-        // Para 3x4 (3 columnas): Usa "calc(33.33% - 14px)"
-        // Para 2x6 (2 columnas): Usa "calc(50% - 10px)"
-        String anchoColumna = "calc(33.33% - 14px)"; 
-
-        for (String grupo : grupos) {
-            VerticalLayout tarjetaGrupo = crearTarjetaParaGrupo(grupo);
-            
-            // Le asignamos el ancho dinámico a cada grupo
-            tarjetaGrupo.getStyle().set("width", anchoColumna);
-            tarjetaGrupo.getStyle().set("min-width", "280px"); // Seguridad para pantallas móviles
-            
-            contenedorFlex.add(tarjetaGrupo);
-        }
-
-        add(contenedorFlex);
+        add(contenedorDeGrupos);
     }
 
     /**
-     * Genera un bloque visual independiente (Tarjeta) para un grupo
+     * Evento que se ejecuta antes de renderizar la página: valida sesión y dibuja los grupos
      */
-    private VerticalLayout crearTarjetaParaGrupo(String nombreGrupo) {
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        Long usuarioId = (Long) VaadinSession.getCurrent().getAttribute("USUARIO_ID");
+        if (usuarioId == null) {
+            event.rerouteTo(""); // Si no está logueado, directo al Login
+            return;
+        }
+
+        // Limpiamos el contenedor para refrescar y no duplicar los datos si el usuario reingresa
+        contenedorDeGrupos.removeAll();
+
+        // 3. 🔥 FORMATO MUNDIAL 2026: Actualizado de 8 a 12 grupos (Del Grupo A al Grupo L)
+        List<String> gruposMundial = Arrays.asList(
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"
+        );
+
+        for (String letraGrupo : gruposMundial) {
+            VerticalLayout tarjetaGrupo = crearTarjetaDeGrupo("GRUPO " + letraGrupo);
+            contenedorDeGrupos.add(tarjetaGrupo);
+        }
+    }
+
+    /**
+     * Método de soporte para fabricar la tarjeta individual de cada grupo con su tabla interna
+     */
+    private VerticalLayout crearTarjetaDeGrupo(String nombreGrupo) {
+        // Contenedor vertical que funcionará como una "tarjeta" visual para el grupo
         VerticalLayout tarjeta = new VerticalLayout();
-        tarjeta.setPadding(true);
-        tarjeta.setSpacing(true);
-        
-        // Estilo de tarjeta moderna (Borde sutil y fondo limpio)
-        tarjeta.getStyle().set("border", "1px solid #e2e8f0");
-        tarjeta.getStyle().set("border-radius", "8px");
-        tarjeta.getStyle().set("background-color", "#f8fafc");
-        tarjeta.getStyle().set("box-shadow", "0 1px 3px rgba(0,0,0,0.05)");
+        tarjeta.setWidth("440px"); // Ancho ideal para que quepan dos columnas en monitores estándar
+        tarjeta.getStyle()
+                .set("background-color", "var(--lumo-base-color)")
+                .set("border", "1px solid var(--lumo-contrast-10pct)")
+                .set("border-radius", "16px")
+                .set("padding", "15px")
+                .set("box-shadow", "0 4px 6px -1px rgba(0,0,0,0.05)");
 
-        // Subtítulo del Grupo
+        // Subtítulo del grupo
         H3 subtitulo = new H3(nombreGrupo);
-        subtitulo.getStyle().set("color", "#1676f3");
-        subtitulo.getStyle().set("margin", "0");
+        subtitulo.getStyle().set("color", "var(--lumo-primary-text-color)").set("margin", "0 0 10px 0");
+        tarjeta.add(subtitulo);
 
-        // Configuración de la Tabla (Grid)
+        // 4. Configuración del mini Grid para los 4 equipos del grupo
         Grid<Equipo> grid = new Grid<>(Equipo.class, false);
-        grid.setAllRowsVisible(true); // Evita scrolls internos feos
+        grid.setAllRowsVisible(true); // Desactiva los scrolls internos del grid para que se expanda limpio
 
-        // Columnas compactas para que quepan bien en la cuadrícula
-     // Cambiamos la columna simple por un renderizador de componentes HTML
-     // Cambiamos la columna para renderizar una Imagen + Texto
-     // 🔥 LLAMADA MAESTRA: El servicio se encarga de fabricar la bandera e incrustarla
+        // Columna País: Utiliza tu servicio para jalar imagen de bandera + texto
         grid.addComponentColumn(equipo -> 
             interfazService.crearCeldaConBandera(equipo.getBanderaEmoji(), equipo.getNombre())
-        ).setHeader("País").setAutoWidth(true);
-        
-        
-        
-        grid.addColumn(Equipo::getPuntos).setHeader("PTS").setWidth("50px").setFlexGrow(0);
+        ).setHeader("País").setAutoWidth(true).setFlexGrow(1);
+
+        // Columnas compactas de estadísticas de juego
+        grid.addColumn(Equipo::getPuntos).setHeader("PTS").setWidth("55px").setFlexGrow(0);
         grid.addColumn(Equipo::getGolesAFavor).setHeader("GF").setWidth("45px").setFlexGrow(0);
         grid.addColumn(Equipo::getGolesEnContra).setHeader("GC").setWidth("45px").setFlexGrow(0);
-        grid.addColumn(e -> (e.getGolesAFavor() - e.getGolesEnContra())).setHeader("DG").setWidth("45px").setFlexGrow(0);
+        
+        // Columna calculada: Diferencia de Goles (DG = GF - GC)
+        grid.addColumn(e -> (e.getGolesAFavor() - e.getGolesEnContra()))
+                .setHeader("DG")
+                .setWidth("45px")
+                .setFlexGrow(0);
 
-        // Cargar datos de SQLite ordenados
-        List<Equipo> equiposDelGrupo = equipoRepository.obtainPosicionesPorGrupo(nombreGrupo);
-        grid.setItems(equiposDelGrupo);
+        // 5. Cargar y ordenar los equipos de este grupo específico desde SQLite
+        // Filtramos por el nombre del grupo y ordenamos por Puntos (Descendente), y luego Diferencia de Goles
+        List<Equipo> equiposFiltrados = equipoRepository.findAll().stream()
+                .filter(e -> nombreGrupo.equalsIgnoreCase(e.getGrupo()))
+                .sorted((e1, e2) -> {
+                    int comparePuntos = Integer.compare(e2.getPuntos(), e1.getPuntos());
+                    if (comparePuntos != 0) return comparePuntos;
+                    
+                    int dg1 = e1.getGolesAFavor() - e1.getGolesEnContra();
+                    int dg2 = e2.getGolesAFavor() - e2.getGolesEnContra();
+                    return Integer.compare(dg2, dg1);
+                })
+                .toList();
 
-        tarjeta.add(subtitulo, grid);
+        grid.setItems(equiposFiltrados);
+        tarjeta.add(grid);
+
         return tarjeta;
     }
- 
 }
