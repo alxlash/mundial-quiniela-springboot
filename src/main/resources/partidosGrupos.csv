@@ -1,0 +1,73 @@
+No.dePartido,Local,Visitante,Fecha,Hora,Estadio,Ciudad,País
+1,A1,A2,2026-06-11,13:00,Estadio Azteca,Ciudad de México,México
+2,A3,A4,2026-06-11,20:00,Estadio Guadalajara,Guadalajara,México
+3,B1,B2,2026-06-12,15:00,Estadio Toronto,Toronto,Canadá
+4,D1,D2,2026-06-12,18:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+5,B3,B4,2026-06-13,12:00,Estadio San Francisco,San Francisco,Estados Unidos
+6,C1,C2,2026-06-13,18:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos
+7,C3,C4,2026-06-13,21:00,Estadio Boston,Boston,Estados Unidos
+8,D3,D4,2026-06-13,21:00,BC Place,Vancouver,Canadá
+9,E1,E2,2026-06-14,12:00,Estadio Houston,Houston,Estados Unidos
+10,F1,F2,2026-06-14,15:00,Estadio Dallas,Dallas,Estados Unidos
+11,E3,E4,2026-06-14,19:00,Estadio Filadelfia,Filadelfia,Estados Unidos
+12,F3,F4,2026-06-14,20:00,Estadio Monterrey,Monterrey,México
+13,H1,H2,2026-06-15,12:00,Estadio Atlanta,Atlanta,Estados Unidos
+14,G1,G2,2026-06-15,12:00,Estadio Seattle,Seattle,Estados Unidos
+15,H3,H4,2026-06-15,18:00,Estadio Miami,Miami,Estados Unidos
+16,G3,G4,2026-06-15,18:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+17,I1,I2,2026-06-16,15:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos
+18,I3,I4,2026-06-16,18:00,Estadio Boston,Boston,Estados Unidos
+19,J1,J2,2026-06-16,20:00,Estadio Kansas City,Kansas City,Estados Unidos
+20,J3,J4,2026-06-16,21:00,Estadio San Francisco,San Francisco,Estados Unidos
+21,K1,K2,2026-06-17,12:00,Estadio Houston,Houston,Estados Unidos
+22,L1,L2,2026-06-17,15:00,Estadio Dallas,Dallas,Estados Unidos
+23,L3,L4,2026-06-17,19:00,Estadio Toronto,Toronto,Canadá
+24,K3,K4,2026-06-17,20:00,Estadio Azteca,Ciudad de México,México
+25,A4,A2,2026-06-18,12:00,Estadio Atlanta,Atlanta,Estados Unidos
+26,B4,B2,2026-06-18,12:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+27,B1,B3,2026-06-18,15:00,BC Place,Vancouver,Canadá
+28,A1,A3,2026-06-18,19:00,Estadio Guadalajara,Guadalajara,México
+29,D1,D3,2026-06-19,12:00,Estadio Seattle,Seattle,Estados Unidos
+30,C2,C4,2026-06-19,18:00,Estadio Boston,Boston,Estados Unidos
+31,C1,C3,2026-06-19,20:30,Estadio Filadelfia,Filadelfia,Estados Unidos
+32,D4,D2,2026-06-19,20:00,Estadio San Francisco,San Francisco,Estados Unidos
+33,F1,F3,2026-06-20,12:00,Estadio Houston,Houston,Estados Unidos
+34,E1,E3,2026-06-20,16:00,Estadio Toronto,Toronto,Canadá
+35,E4,E2,2026-06-20,19:00,Estadio Kansas City,Kansas City,Estados Unidos
+36,F4,F2,2026-06-20,22:00,Estadio Monterrey,Monterrey,México
+37,H1,H3,2026-06-21,12:00,Estadio Atlanta,Atlanta,Estados Unidos
+38,G1,G3,2026-06-21,12:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+39,H4,H2,2026-06-21,18:00,Estadio Miami,Miami,Estados Unidos
+40,G4,G2,2026-06-21,18:00,BC Place,Vancouver,Canadá
+41,I1,I3,2026-06-22,12:00,Estadio Dallas,Dallas,Estados Unidos
+42,I4,I2,2026-06-22,15:00,Estadio Chicago,Chicago,Estados Unidos
+43,J1,J3,2026-06-22,18:00,Estadio MetLife,Nueva York/Nueva Jersey,Estados Unidos
+44,J4,J2,2026-06-22,21:00,Estadio San Francisco,San Francisco,Estados Unidos
+45,K1,K3,2026-06-23,15:00,Estadio Boston,Boston,Estados Unidos
+46,K4,K2,2026-06-23,18:00,Estadio Miami,Miami,Estados Unidos
+47,L1,L3,2026-06-23,21:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+48,L4,L2,2026-06-23,21:00,Estadio Seattle,Seattle,Estados Unidos
+49,A2,A3,2026-06-24,15:00,Estadio Monterrey,Monterrey,México
+50,A4,A1,2026-06-24,17:00,Estadio Azteca,Ciudad de México,México
+51,B2,B3,2026-06-24,20:00,Estadio Filadelfia,Filadelfia,Estados Unidos
+52,B4,B1,2026-06-24,20:00,Estadio Toronto,Toronto,Canadá
+53,C4,C1,2026-06-25,12:00,Estadio Atlanta,Atlanta,Estados Unidos
+54,C3,C2,2026-06-25,12:00,Estadio Miami,Miami,Estados Unidos
+55,D2,D3,2026-06-25,15:00,Estadio Houston,Houston,Estados Unidos
+56,D4,D1,2026-06-25,15:00,Estadio Dallas,Dallas,Estados Unidos
+57,E2,E3,2026-06-26,12:00,Estadio Chicago,Chicago,Estados Unidos
+58,E4,E1,2026-06-26,12:00,Estadio Boston,Boston,Estados Unidos
+59,F2,F3,2026-06-26,15:00,Estadio San Francisco,San Francisco,Estados Unidos
+60,F4,F1,2026-06-26,15:00,Estadio Los Ángeles,Los Ángeles,Estados Unidos
+61,G2,G3,2026-06-27,15:00,Estadio Filadelfia,Filadelfia,Estados Unidos
+62,G4,G1,2026-06-27,15:00,Estadio Seattle,Seattle,Estados Unidos
+63,H2,H3,2026-06-27,18:00,Estadio Houston,Houston,Estados Unidos
+64,H4,H1,2026-06-27,18:00,Estadio Guadalajara,Guadalajara,México
+65,I2,I3,2026-06-27,21:00,Estadio Monterrey,Monterrey,México
+66,I4,I1,2026-06-27,21:00,Estadio Azteca,Ciudad de México,México
+67,J2,J3,2026-06-27,18:00,Estadio Kansas City,Kansas City,Estados Unidos
+68,J4,J1,2026-06-27,18:00,Estadio Dallas,Dallas,Estados Unidos
+69,K2,K3,2026-06-27,21:00,Estadio Atlanta,Atlanta,Estados Unidos
+70,K4,K1,2026-06-27,21:00,Estadio Miami,Miami,Estados Unidos
+71,L2,L3,2026-06-27,21:00,Estadio Toronto,Toronto,Canadá
+72,L4,L1,2026-06-27,21:00,Estadio San Francisco,San Francisco,Estados Unidos
