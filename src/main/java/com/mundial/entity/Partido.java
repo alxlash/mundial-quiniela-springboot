@@ -9,7 +9,7 @@ import java.time.LocalTime;
 public class Partido {
 
     @Id
-    private int numeroPartido; // El "No.dePartido" del CSV será nuestra llave primaria
+    private int numeroPartido; // El "No.dePartido" del CSV es nuestra llave primaria
 
     private String codigoLocal;     // Guardará "A1", "A2", "L4", etc.
     private String codigoVisitante; // Guardará "B1", "B2", etc.
@@ -18,21 +18,34 @@ public class Partido {
     private LocalTime hora;
     private String estadio;
     private String ciudad;
-    private String paisSede; // Para evitar confusión con el país del equipo, lo llamamos paisSede
+    private String paisSede; 
 
-    private Integer golesLocal;     // Nullable hasta que se juegue
-    private Integer golesVisitante; // Nullable hasta que se juegue
+    private Integer golesLocal;     
+    private Integer golesVisitante; 
     private boolean jugado = false;
+    private String fase; // Guardará la etapa del torneo ("GRUPO", "DIECISEISAVOS", etc.)
+    private String grupo; // 🔥 Campo faltante: Guardará "A", "B", "C", etc.
 
-	    // Dentro de la clase Partido.java:
-	    private String fase; // Guardará la etapa del torneo
-	
-	    public String getFase() { return fase; }
-	    public void setFase(String fase) { this.fase = fase; }
-    
-    
+    // 💡 CAMPOS TRANSIENT (Virtuales): No se crean en la tabla de la base de datos SQLite,
+    // pero nos sirven para pasarle las banderas y nombres reales de los equipos a la interfaz web.
+    @Transient
+    private String nombreLocal;
+    @Transient
+    private String banderaLocal;
+    @Transient
+    private String nombreVisitante;
+    @Transient
+    private String banderaVisitante;
+
     // --- CONSTRUCTORES ---
     public Partido() {}
+
+    // --- 🔥 GETTER VIRTUAL COMPATIBLE CON ID ---
+    // Como tu repositorio e interfaz a veces buscan un "Id" genérico, este método
+    // hace que llamar a getId() devuelva el numeroPartido sin alterar tu base de datos.
+    public Integer getId() {
+        return this.numeroPartido;
+    }
 
     // --- GETTERS Y SETTERS ---
     public int getNumeroPartido() { return numeroPartido; }
@@ -67,4 +80,22 @@ public class Partido {
 
     public boolean isJugado() { return jugado; }
     public void setJugado(boolean jugado) { this.jugado = jugado; }
+
+    public String getFase() { return fase; }
+    public void setFase(String fase) { this.fase = fase; }
+
+    public String getGrupo() { return grupo; }
+    public void setGrupo(String grupo) { this.grupo = grupo; }
+
+    public String getNombreLocal() { return nombreLocal; }
+    public void setNombreLocal(String nombreLocal) { this.nombreLocal = nombreLocal; }
+
+    public String getBanderaLocal() { return banderaLocal; }
+    public void setBanderaLocal(String banderaLocal) { this.banderaLocal = banderaLocal; }
+
+    public String getNombreVisitante() { return nombreVisitante; }
+    public void setNombreVisitante(String nombreVisitante) { this.nombreVisitante = nombreVisitante; }
+
+    public String getBanderaVisitante() { return banderaVisitante; }
+    public void setBanderaVisitante(String banderaVisitante) { this.banderaVisitante = banderaVisitante; }
 }

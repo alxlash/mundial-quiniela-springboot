@@ -1,5 +1,7 @@
 package com.mundial.view;
 
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+
 import com.mundial.entity.Usuario;
 import com.mundial.repository.PartidoRepository;
 import com.mundial.repository.PronosticoRepository;
@@ -131,6 +133,8 @@ public class RankingView extends VerticalLayout implements BeforeEnterObserver {
         }).setHeader("Progreso Quiniela").setAutoWidth(true);
 
         add(gridRanking);
+getStyle().setWidth("50%");
+setAlignItems(Alignment.CENTER);
     }
 
     /**

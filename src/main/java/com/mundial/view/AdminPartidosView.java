@@ -226,7 +226,7 @@ public class AdminPartidosView extends VerticalLayout implements BeforeEnterObse
         Object usuarioNombre = VaadinSession.getCurrent().getAttribute("USUARIO_NOMBRE");
 
         // 2. Si no hay sesión, o si el nombre de usuario NO es tu usuario admin, denegamos el acceso
-        if (usuarioId == null || ! "admin".equalsIgnoreCase(String.valueOf(usuarioNombre))) {
+        if (usuarioId == null || ! "Alex".equalsIgnoreCase(String.valueOf(usuarioNombre))) {
             
             // 🚫 ¡Intruso detectado! Lo redirigimos de vuelta a la Bienvenida de usuarios
             event.rerouteTo("bienvenida");

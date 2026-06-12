@@ -126,8 +126,48 @@ public class PartidosView extends VerticalLayout {
             }
         }).setHeader("Equipo Visitante").setAutoWidth(true);
 
-        gridPartidos.addColumn(pio -> "11:00").setHeader("Horario").setWidth("90px").setFlexGrow(0);
-        gridPartidos.addColumn(pio -> "Estadio Mundial").setHeader("Estadio").setAutoWidth(true);
+        
+        //Mostrando la hora de acuerdo a la BdD
+        gridPartidos.addComponentColumn(pio -> {
+            com.vaadin.flow.component.orderedlayout.VerticalLayout celdaTiempo = new com.vaadin.flow.component.orderedlayout.VerticalLayout();
+            celdaTiempo.setPadding(false);
+            celdaTiempo.setSpacing(false);
+
+            // 📅 Formatear Fecha (Ej: 11 Jun, 2026)
+            String txtFecha = (pio.getFecha() != null) 
+                    ? pio.getFecha().format(java.time.format.DateTimeFormatter.ofPattern("dd MMM, yyyy")) 
+                    : "Por definir";
+            com.vaadin.flow.component.html.Span spanFecha = new com.vaadin.flow.component.html.Span(txtFecha);
+            spanFecha.getStyle().set("font-weight", "600");
+
+            // ⏰ Formatear Hora (Ej: 16:30)
+            String txtHora = (pio.getHora() != null) ? pio.getHora().toString() : "--:--";
+            com.vaadin.flow.component.html.Span spanHora = new com.vaadin.flow.component.html.Span(txtHora);
+            spanHora.getStyle().set("font-size", "12px").set("color", "var(--lumo-secondary-text-color)");
+
+            celdaTiempo.add(spanFecha, spanHora);
+            return celdaTiempo;
+        }).setHeader("Fecha y Hora").setWidth("160px").setFlexGrow(0);
+        
+        //Mostrando todo sobre la sede del partido
+        gridPartidos.addComponentColumn(pio -> {
+            com.vaadin.flow.component.orderedlayout.VerticalLayout celdaSede = new com.vaadin.flow.component.orderedlayout.VerticalLayout();
+            celdaSede.setPadding(false);
+            celdaSede.setSpacing(false);
+
+            com.vaadin.flow.component.html.Span txtEstadio = new com.vaadin.flow.component.html.Span(pio.getEstadio() != null ? pio.getEstadio() : "Por asignar");
+            txtEstadio.getStyle().set("font-weight", "600");
+
+            String ubicacion = (pio.getCiudad() != null ? pio.getCiudad() : "Ubicación") 
+                    + (pio.getPaisSede() != null ? ", " + pio.getPaisSede() : "");
+            com.vaadin.flow.component.html.Span txtUbicacion = new com.vaadin.flow.component.html.Span(ubicacion);
+            txtUbicacion.getStyle().set("font-size", "12px").set("color", "var(--lumo-secondary-text-color)");
+
+            celdaSede.add(txtEstadio, txtUbicacion);
+            return celdaSede;
+        }).setHeader("Sede / Estadio").setWidth("220px").setFlexGrow(0);
+        
+
 
         // Caja de comentarios
         gridPartidos.addComponentColumn(pio -> {
