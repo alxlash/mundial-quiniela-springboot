@@ -24,9 +24,7 @@ import java.util.List;
 @Route(value = "ranking", layout = MainLayout.class)
 public class RankingView extends VerticalLayout implements BeforeEnterObserver {
 
-    private final UsuarioRepository usuarioRepository;
-    private final PronosticoRepository pronosticoRepository;
-    private final PartidoRepository partidoRepository;
+    private final UsuarioRepository usuarioRepository;  
 
     private Grid<Usuario> gridRanking;
     private long totalPartidosMundial;
@@ -34,9 +32,7 @@ public class RankingView extends VerticalLayout implements BeforeEnterObserver {
     public RankingView(UsuarioRepository usuarioRepository, 
                        PronosticoRepository pronosticoRepository, 
                        PartidoRepository partidoRepository) {
-        this.usuarioRepository = usuarioRepository;
-        this.pronosticoRepository = pronosticoRepository;
-        this.partidoRepository = partidoRepository;
+        this.usuarioRepository = usuarioRepository;  
 
         setSizeFull();
         setPadding(true);

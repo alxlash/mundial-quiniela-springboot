@@ -96,7 +96,7 @@ public class GeneralPartidosView extends VerticalLayout implements BeforeEnterOb
         // 4. Configuración del Grid
         gridCalendario = new Grid<>(Partido.class, false);
         gridCalendario.setSizeFull();
-gridCalendario.getStyle().set("--lumo-size-m", "80px").setWidth("55%");
+gridCalendario.getStyle().set("--lumo-size-m", "80px").setWidth("100%");
 
         // COLUMNA 1: Info Temporal
         gridCalendario.addComponentColumn(partido -> {
